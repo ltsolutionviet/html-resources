@@ -1,4 +1,6 @@
-
+.explainqe:before {
+    content: "Example";
+}
 .explainq0:before {
     content: "Q0";
 }
