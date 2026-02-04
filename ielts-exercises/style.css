@@ -1,0 +1,639 @@
+@charset "UTF-8";
+/* Mobile-First CSS for IELTS Exercises */
+
+/* ==================== RESET & BASE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 12px;
+}
+
+/* ==================== MAIN CONTAINER ==================== */
+#content {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #667eea;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: #4a5568;
+}
+
+strong {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+em {
+    color: #667eea;
+    font-style: italic;
+}
+
+u {
+    text-decoration: none;
+    border-bottom: 2px solid #fbbf24;
+    display: inline;
+}
+
+/* ==================== LISTS ==================== */
+ul {
+    margin: 1rem 0 1.5rem 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+ul li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    color: #4a5568;
+}
+
+ul li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #8b5cf6;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* ==================== ORDERED LISTS (QUESTIONS) ==================== */
+form>ol {
+    list-style: none;
+    counter-reset: question-counter;
+    padding-left: 0;
+    margin: 1.5rem 0;
+}
+
+form>ol>li {
+    counter-increment: question-counter;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+    background: #f7fafc;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    position: relative;
+}
+
+form>ol>li:before {
+    content: counter(question-counter) ".";
+    font-weight: 700;
+    color: #667eea;
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* Answer choices */
+form ol ol {
+    margin-top: 1rem;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: none;
+}
+
+form ol ol li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+form ol ol li:before {
+    content: none;
+}
+
+form ol ol li:hover {
+    border-color: #667eea;
+    background: #edf2f7;
+    transform: translateX(4px);
+}
+
+/* Highlight selected option - Fallback for older iOS (<15.4) */
+form ol ol li.selected {
+    background: #ede9fe;
+    border-color: #8b5cf6;
+    border-width: 3px;
+}
+
+/* Highlight selected option - Modern browsers (iOS 15.4+) */
+form ol ol li:has(input[type="radio"]:checked) {
+    background: #ede9fe;
+    border-color: #8b5cf6;
+    border-width: 3px;
+}
+
+form ol ol li label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Radio buttons */
+input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #8b5cf6;
+    /* iOS 15.4+ */
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* Fallback for browsers that don't support accent-color (iOS <15.4) */
+@supports not (accent-color: #8b5cf6) {
+    input[type="radio"]:checked {
+        filter: hue-rotate(200deg) saturate(1.5);
+    }
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 4px;
+    vertical-align: middle;
+
+    /* Safari compatibility */
+    -webkit-appearance: none;
+    appearance: none;
+    border: 2px solid #cbd5e1;
+    background: white;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:hover {
+    border-color: #8b5cf6;
+}
+
+input[type="checkbox"]:checked {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+/* Checkmark icon */
+input[type="checkbox"]:checked::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+}
+
+/* ==================== TEXT INPUT FIELDS ==================== */
+input[type="text"].ex-input,
+input.ex-input {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    color: #1e293b;
+    background: white;
+    transition: all 0.3s ease;
+    outline: none;
+    min-height: 36px;
+    width: 150px;
+    max-width: 100%;
+    /* Remove default iOS styling */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Focus state */
+input[type="text"].ex-input:focus,
+input.ex-input:focus {
+    border-color: #8b5cf6;
+    background: #faf5ff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* Placeholder styling */
+input[type="text"].ex-input::placeholder,
+input.ex-input::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
+
+/* ==================== CUSTOM AUDIO PLAYER ==================== */
+.audio-player {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Play Button */
+.play-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.play-btn:active {
+    transform: scale(0.95);
+}
+
+.play-icon,
+.pause-icon {
+    width: 24px;
+    height: 24px;
+    color: #667eea;
+}
+
+/* Time Display */
+.time-display {
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Progress Container */
+.progress-container {
+    flex: 1;
+    position: relative;
+}
+
+.progress-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+}
+
+.progress-fill {
+    height: 100%;
+    background: white;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+    position: relative;
+}
+
+.progress-handle {
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 0%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    opacity: 0;
+}
+
+.progress-bar:hover .progress-handle {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* ==================== BUTTONS ==================== */
+.b2 {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    margin-top: 0.75rem;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(251, 191, 36, 0.25);
+    min-height: 44px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.b2:hover,
+.b2:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(251, 191, 36, 0.35);
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.ex-but {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+    min-height: 48px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.ex-but:hover,
+.ex-but:active {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+/* ==================== SECONDARY BUTTONS (Show/Hide Answers & Transcript) ==================== */
+button[onclick^="answers"],
+button[onclick^="noanswers"],
+button[onclick^="toggle"] {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    margin-top: 0.75rem;
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+button[onclick^="answers"]:hover,
+button[onclick^="answers"]:active,
+button[onclick^="noanswers"]:hover,
+button[onclick^="noanswers"]:active,
+button[onclick^="toggle"]:hover,
+button[onclick^="toggle"]:active {
+    background: #667eea;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* ==================== HINT BOX ==================== */
+.hint {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-left: 4px solid #3b82f6;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1e40af;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.hint u {
+    border-bottom-color: #3b82f6;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+/* ==================== RESULT ==================== */
+.exercises {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #667eea;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 12px;
+    border: 2px solid #667eea;
+}
+
+.exercises span[style*="color:green"] {
+    color: #10b981 !important;
+}
+
+/* Result icons */
+span img[src*="ok.png"],
+span img[src*="cross.png"] {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+    body {
+        padding: 24px;
+    }
+
+    #content {
+        padding: 32px;
+        max-width: 900px;
+    }
+
+    h2 {
+        font-size: 2.25rem;
+    }
+
+    p {
+        font-size: 1.0625rem;
+    }
+
+    form ol>li {
+        padding: 1.5rem;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+    body {
+        padding: 32px;
+    }
+
+    #content {
+        padding: 40px;
+        max-width: 1000px;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    form ol ol li:hover {
+        transform: translateX(8px);
+    }
+}
+
+/* ==================== SELECT DROPDOWN ==================== */
+select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #1e293b;
+    background: white;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3e%3cpolyline points="6 9 12 15 18 9"%3e%3c/polyline%3e%3c/svg%3e');
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    min-height: 44px;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+select:hover {
+    border-color: #8b5cf6;
+}
+
+select:focus {
+    border-color: #8b5cf6;
+    background-color: #faf5ff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+select:disabled {
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ==================== TABLES ==================== */
+table {
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5rem auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+table th,
+table td {
+    padding: 0.875rem 1rem;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    line-height: 1.5;
+}
+
+table th {
+    background-color: #f8fafc;
+    font-weight: 700;
+    color: #475569;
+    text-align: center;
+}
+
+table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+table tr:hover {
+    background-color: #f1f5f9;
+    transition: background-color 0.2s ease;
+}
+
+/* Ensure table attributes are respected but modernized */
+table[align="center"] {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive table wrapper (if used) */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5rem 0;
+}
